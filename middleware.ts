@@ -10,5 +10,6 @@ export const config = {
   matcher: [
     "/welcome",
     "/games",
+    "/books",
   ]
 };
