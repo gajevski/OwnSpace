@@ -11,5 +11,6 @@ export const config = {
     "/welcome",
     "/games",
     "/books",
+    "/thoughts"
   ]
 };
