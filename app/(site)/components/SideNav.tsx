@@ -24,6 +24,11 @@ const SideNav = () => {
               </a>
             </li>
             <li>
+              <a href="/projects" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <span className="ml-3">Projects</span>
+              </a>
+            </li>
+            <li>
               <a href="/api/auth/signout" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <span className="ml-3">Sign Out</span>
               </a>
