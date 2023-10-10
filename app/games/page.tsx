@@ -1,5 +1,38 @@
+'use client'
+
+import UserGames from "./components/games";
+
 export default function Games() {
+    const addGame = async () => {
+        try {
+            const response = await fetch("/api/games", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    image: "game_image_url",
+                    title: "Game Title",
+                    description: "Game Description",
+                }),
+            });
+
+            if (response.ok) {
+                console.log("Game created successfully!");
+            } else {
+                console.error("Failed to create a game");
+            }
+        } catch (error) {
+            console.error("Error creating a game:", error);
+        } finally {
+            console.log('finally');
+        }
+    };
+
     return (
-        <div>games page</div>
-    )
+        <div className="h-full">
+            <button onClick={addGame}>Add game</button>
+            <UserGames />
+        </div>
+    );
 }
