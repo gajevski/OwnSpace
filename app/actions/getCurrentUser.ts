@@ -11,8 +11,11 @@ const getCurrentUser = async () => {
 
     const currentUser = await prisma.user.findUnique({
       where: {
-        email: session.user.email as string
-      }
+        email: session.user.email as string,
+      },
+      include: {
+        games: true,
+      },
     });
 
     if (!currentUser) {
@@ -21,6 +24,7 @@ const getCurrentUser = async () => {
 
     return currentUser;
   } catch (error: any) {
+    console.log(error, 'ERROR');
     return null;
   }
 };
