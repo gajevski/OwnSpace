@@ -30,8 +30,10 @@ export default function Games() {
     };
 
     return (
-        <div className="h-full">
-            <button onClick={addGame}>Add game</button>
+        <div className="h-full flex flex-col">
+            <div className="flex items-center justify-end">
+                <button className="btn btn-accent" onClick={addGame}>Add game</button>
+            </div>
             <UserGames />
         </div>
     );

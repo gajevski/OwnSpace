@@ -24,7 +24,6 @@ function UserGames() {
 
   return (
     <div>
-      <h2>User's Games</h2>
       <ul>
         {games?.games?.map((game: any) => (
           <li key={game.id}>
