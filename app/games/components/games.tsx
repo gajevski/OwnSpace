@@ -4,23 +4,15 @@ function UserGames() {
   const [games, setGames]: any = useState([]);
 
   useEffect(() => {
-    const fetchGames = async () => {
-      try {
-        const response = await fetch('/api/games');
-
-        if (response.ok) {
-          const data = await response.json();
-          setGames(data);
-        } else {
-          console.error('Failed to fetch games');
-        }
-      } catch (error) {
-        console.error('Error fetching games:', error);
-      }
-    };
-
-    fetchGames();
-  });
+    fetch('/api/games')
+      .then(response => response.json())
+      .then(data => {
+        setGames(data.periods);
+      })
+      .catch(error => {
+        console.error('Error fetching periods:', error);
+      });
+  }, []);
 
   return (
     <div>

@@ -1,16 +1,21 @@
 'use client'
 
-import { useEffect, useState } from "react";
+// Use the required React imports
+import { useState, useEffect } from "react";
 
 export default function Games() {
-    const [games, setGames]: any = useState([]);
+    const [games, setGames] = useState([]);
+    const [formData, setFormData] = useState({
+        image: "",
+        title: "",
+        description: "",
+    });
 
     useEffect(() => {
         fetch('/api/games')
             .then(response => response.json())
             .then(data => {
                 setGames(data.games);
-                console.log(data.games, 'data');
             })
             .catch(error => {
                 console.error('Error fetching games:', error);
@@ -24,11 +29,7 @@ export default function Games() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({
-                    image: "game_image_url",
-                    title: "Game Title",
-                    description: "Game Description",
-                }),
+                body: JSON.stringify(formData),
             });
 
             if (response.ok) {
@@ -43,15 +44,22 @@ export default function Games() {
         }
     };
 
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
+
     return (
         <div className="h-full flex flex-col">
             <div className="flex items-center justify-end">
-                {/* <button className="btn btn-accent" onClick={addGame}>Add game</button> */}
                 <button className="btn btn-accent" onClick={() => document.getElementById('add_game_modal').showModal()}>Add game</button>
             </div>
             <div>
                 <ul>
-                    {games.map((game: any) => (
+                    {games.map((game) => (
                         <li key={game.id}>
                             <h3>{game.title}</h3>
                             <p>{game.description}</p>
@@ -67,19 +75,40 @@ export default function Games() {
                         <label className="label">
                             <span className="label-text">Image URL</span>
                         </label>
-                        <input type="text" name="image" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+                        <input
+                            type="text"
+                            name="image"
+                            placeholder="Type here"
+                            className="input input-bordered w-full max-w-xs"
+                            onChange={handleInputChange}
+                            value={formData.image}
+                        />
                     </div>
                     <div className="form-control w-full max-w-xs mb-4">
                         <label className="label">
                             <span className="label-text">Title</span>
                         </label>
-                        <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+                        <input
+                            type="text"
+                            name="title"
+                            placeholder="Type here"
+                            className="input input-bordered w-full max-w-xs"
+                            onChange={handleInputChange}
+                            value={formData.title}
+                        />
                     </div>
                     <div className="form-control w-full max-w-xs">
                         <label className="label">
                             <span className="label-text">Description</span>
                         </label>
-                        <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+                        <input
+                            type="text"
+                            name="description"
+                            placeholder="Type here"
+                            className="input input-bordered w-full max-w-xs"
+                            onChange={handleInputChange}
+                            value={formData.description}
+                        />
                     </div>
                     <div className="modal-action">
                         <button className="btn btn-outline" onClick={() => window.add_game_modal.close()}>
@@ -88,6 +117,7 @@ export default function Games() {
                         <button
                             type="button"
                             className="btn btn-info"
+                            onClick={addGame}
                         >
                             Add
                         </button>
@@ -97,7 +127,6 @@ export default function Games() {
                     <button>close</button>
                 </form>
             </dialog>
-
         </div>
     );
 }

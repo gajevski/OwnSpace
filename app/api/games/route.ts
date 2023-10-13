@@ -13,12 +13,14 @@ export async function POST(request: Request) {
       return new NextResponse('Unauthorized', { status: 400 });
     }
 
+    const { image, title, description } = body;
+
     const newGame = await prisma.game.create({
       data: {
         user: { connect: { id: currentUser.id } },
-        image: "game_image_url",
-        title: "Game Title",
-        description: "Game Description",
+        image,
+        title,
+        description,
       },
     });
 
@@ -42,7 +44,6 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
 
     if (!currentUser?.id) {
       return new NextResponse('Unauthorized', { status: 400 });
-
     }
 
     const games = await prisma.game.findMany({
@@ -53,11 +54,11 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
 
     return new NextResponse(
       JSON.stringify({
-        games
+        games,
       })
     );
   } catch (error) {
     console.error('Error fetching games:', error);
     return new NextResponse('Internal Error', { status: 500 });
   }
-};
+}
