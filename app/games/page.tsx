@@ -1,8 +1,22 @@
 'use client'
 
-import UserGames from "./components/games";
+import { useEffect, useState } from "react";
 
 export default function Games() {
+    const [games, setGames]: any = useState([]);
+
+    useEffect(() => {
+        fetch('/api/games')
+            .then(response => response.json())
+            .then(data => {
+                setGames(data.games);
+                console.log(data.games, 'data');
+            })
+            .catch(error => {
+                console.error('Error fetching games:', error);
+            });
+    }, []);
+
     const addGame = async () => {
         try {
             const response = await fetch("/api/games", {
@@ -35,7 +49,17 @@ export default function Games() {
                 {/* <button className="btn btn-accent" onClick={addGame}>Add game</button> */}
                 <button className="btn btn-accent" onClick={() => document.getElementById('add_game_modal').showModal()}>Add game</button>
             </div>
-            <UserGames />
+            <div>
+                <ul>
+                    {games.map((game: any) => (
+                        <li key={game.id}>
+                            <h3>{game.title}</h3>
+                            <p>{game.description}</p>
+                            <img src={game.image} alt={game.title} />
+                        </li>
+                    ))}
+                </ul>
+            </div>
             <dialog id="add_game_modal" className="modal">
                 <div className="modal-box flex flex-col items-center">
                     <h3 className="font-bold text-lg mb-8">Add a new game</h3>
@@ -43,7 +67,7 @@ export default function Games() {
                         <label className="label">
                             <span className="label-text">Image URL</span>
                         </label>
-                        <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+                        <input type="text" name="image" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
                     </div>
                     <div className="form-control w-full max-w-xs mb-4">
                         <label className="label">
