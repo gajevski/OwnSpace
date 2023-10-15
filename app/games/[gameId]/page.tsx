@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 
-export default function gameId({params}) {
-    const [games, setGames] = useState([]);
+export default function gameId({ params }) {
+    const [game, setGame] = useState([]);
 
 
     useEffect(() => {
@@ -11,17 +11,19 @@ export default function gameId({params}) {
             .then(response => response.json())
             .then(data => {
                 console.log(data, 'data');
-                setGames(data.games);
+                setGame(data.game);
             })
             .catch(error => {
-                console.error('Error fetching games:', error);
+                console.error('Error fetching game details:', error);
             });
     }, []);
 
 
     return (
         <div className="h-full flex flex-col">
-
+            <h3>{game.title}</h3>
+            <p>{game.description}</p>
+            <img src={game.image} alt={game.title} />
         </div>
     );
 }

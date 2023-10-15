@@ -1,6 +1,6 @@
 'use client'
 
-// Use the required React imports
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 export default function Games() {
@@ -61,9 +61,9 @@ export default function Games() {
                 <ul>
                     {games.map((game) => (
                         <li key={game.id}>
+                            <Link href={`/games/${game.id}`}>
                             <h3>{game.title}</h3>
-                            <p>{game.description}</p>
-                            <img src={game.image} alt={game.title} />
+                            </Link>
                         </li>
                     ))}
                 </ul>
