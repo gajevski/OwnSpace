@@ -20,10 +20,10 @@ export default function gameId({ params }) {
 
 
     return (
-        <div className="h-full flex flex-col">
-            <h3>{game.title}</h3>
-            <p>{game.description}</p>
+        <div className="h-full flex flex-col prose">
+            <h1>{game.title}</h1>
             <img src={game.image} alt={game.title} />
+            <p>{game.description}</p>
         </div>
     );
 }
