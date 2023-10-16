@@ -53,20 +53,21 @@ export default function Games() {
     };
 
     return (
-        <div className="h-full flex flex-col">
-            <div className="flex items-center justify-end">
-                <button className="btn btn-accent" onClick={() => document.getElementById('add_game_modal').showModal()}>Add game</button>
+        <div className="h-full flex flex-col prose">
+            <div className="flex flex-row justify-between">
+                <h1>Games:</h1>
+                <div className="flex justify-end">
+                    <button className="btn btn-accent" onClick={() => document.getElementById('add_game_modal').showModal()}>Add game</button>
+                </div>
             </div>
             <div>
-                <ul>
-                    {games.map((game) => (
-                        <li key={game.id}>
-                            <Link href={`/games/${game.id}`}>
+                {games.map((game) => (
+                    <div key={game.id}>
+                        <Link className="no-underline" href={`/games/${game.id}`}>
                             <h3>{game.title}</h3>
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
+                        </Link>
+                    </div>
+                ))}
             </div>
             <dialog id="add_game_modal" className="modal">
                 <div className="modal-box flex flex-col items-center">
