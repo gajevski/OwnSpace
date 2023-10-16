@@ -20,10 +20,10 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <AuthContext>
-        <SideNav />
-          <div className="p-4 sm:ml-64">
+          <SideNav />
+          <div className="p-4 sm:ml-64 bg-base-100">
             <div className="p-4">
-          {children}
+              {children}
             </div>
           </div>
         </AuthContext>
