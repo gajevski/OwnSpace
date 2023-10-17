@@ -33,6 +33,7 @@ export default function Games() {
             });
 
             if (response.ok) {
+                window.add_game_modal.close();
                 console.log("Game created successfully!");
             } else {
                 console.error("Failed to create a game");
