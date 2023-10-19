@@ -1,10 +1,10 @@
 'use client'
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function gameId({ params }) {
     const [game, setGame] = useState([]);
-
+    const textareaRef = useRef(null);
 
     useEffect(() => {
         fetch(`/api/games/${params.gameId}`)
@@ -18,6 +18,18 @@ export default function gameId({ params }) {
             });
     }, []);
 
+    useEffect(() => {
+        if (textareaRef.current) {
+            adjustTextareaHeight();
+        }
+    }, [game.description]);
+
+    const adjustTextareaHeight = () => {
+        if (textareaRef.current) {
+            textareaRef.current.style.height = "auto"; // Reset the height to auto to calculate the new height
+            textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+        }
+    };
 
     return (
         <div className="h-full flex flex-col prose">
@@ -61,13 +73,7 @@ export default function gameId({ params }) {
                         <label className="label">
                             <span className="label-text">Description</span>
                         </label>
-                        <input
-                            type="text"
-                            name="description"
-                            placeholder="Type here"
-                            className="input input-bordered w-full max-w-xs"
-                            value={game?.description}
-                        />
+                        <textarea className="textarea textarea-bordered textarea-md w-full max-w-xs" name="description" value={game?.description} onChange={adjustTextareaHeight} ref={textareaRef}></textarea>
                     </div>
                     <div className="modal-action">
                         <button className="btn btn-outline" onClick={() => window.edit_game_modal.close()}>
