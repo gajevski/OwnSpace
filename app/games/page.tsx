@@ -103,14 +103,7 @@ export default function Games() {
                         <label className="label">
                             <span className="label-text">Description</span>
                         </label>
-                        <input
-                            type="text"
-                            name="description"
-                            placeholder="Type here"
-                            className="input input-bordered w-full max-w-xs"
-                            onChange={handleInputChange}
-                            value={formData.description}
-                        />
+                        <textarea className="textarea textarea-bordered textarea-md w-full max-w-xs" name="description"></textarea>
                     </div>
                     <div className="modal-action">
                         <button className="btn btn-outline" onClick={() => window.add_game_modal.close()}>
