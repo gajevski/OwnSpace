@@ -42,6 +42,7 @@ export default function gameId({ params }) {
                             name="image"
                             placeholder="Type here"
                             className="input input-bordered w-full max-w-xs"
+                            value={game?.image}
                         />
                     </div>
                     <div className="form-control w-full max-w-xs mb-4">
@@ -53,6 +54,7 @@ export default function gameId({ params }) {
                             name="title"
                             placeholder="Type here"
                             className="input input-bordered w-full max-w-xs"
+                            value={game?.title}
                         />
                     </div>
                     <div className="form-control w-full max-w-xs">
@@ -64,6 +66,7 @@ export default function gameId({ params }) {
                             name="description"
                             placeholder="Type here"
                             className="input input-bordered w-full max-w-xs"
+                            value={game?.description}
                         />
                     </div>
                     <div className="modal-action">
