@@ -26,7 +26,7 @@ export default function gameId({ params }) {
 
     const adjustTextareaHeight = () => {
         if (textareaRef.current) {
-            textareaRef.current.style.height = "auto"; // Reset the height to auto to calculate the new height
+            textareaRef.current.style.height = "auto";
             textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
         }
     };
