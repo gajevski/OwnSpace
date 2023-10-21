@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import "../models/window";
 
 export default function Games() {
     const [games, setGames] = useState([]);
