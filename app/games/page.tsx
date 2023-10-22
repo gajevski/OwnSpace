@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import "../models/window";
+import { Game } from "../models/game";
 
 export default function Games() {
     const [games, setGames] = useState([]);
@@ -63,7 +64,7 @@ export default function Games() {
                 </div>
             </div>
             <div>
-                {games.map((game) => (
+                {games.map((game: Game) => (
                     <div key={game.id}>
                         <Link className="no-underline" href={`/games/${game.id}`}>
                             <h3>{game.title}</h3>
