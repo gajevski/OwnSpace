@@ -1,10 +1,16 @@
-'use client'
-
+import { Game } from "@/app/models/game";
 import { useState, useEffect, useRef } from "react";
+import "../models/window";
 
-export default function gameId({ params }) {
-    const [game, setGame] = useState([]);
-    const textareaRef = useRef(null);
+interface Props {
+    params: {
+        gameId: string;
+    };
+}
+
+export default function gameId({ params }: Props): JSX.Element {
+    const [game, setGame] = useState<Game>({ title: "", image: "", description: "" });
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
 
     useEffect(() => {
         fetch(`/api/games/${params.gameId}`)
@@ -16,7 +22,7 @@ export default function gameId({ params }) {
             .catch(error => {
                 console.error('Error fetching game details:', error);
             });
-    }, []);
+    }, [params.gameId]);
 
     useEffect(() => {
         if (textareaRef.current) {
@@ -36,7 +42,7 @@ export default function gameId({ params }) {
             <div className="flex flex-row justify-between">
                 <h1>{game.title}</h1>
                 <div className="flex justify-end">
-                    <button className="btn btn-accent" onClick={() => document.getElementById('edit_game_modal').showModal()}>Edit game</button>
+                    <button className="btn btn-accent" onClick={() => (document.getElementById('edit_game_modal') as HTMLDialogElement)?.showModal()}>Edit game</button>
                 </div>
             </div>
             <img src={game.image} alt={game.title} />
@@ -76,7 +82,7 @@ export default function gameId({ params }) {
                         <textarea className="textarea textarea-bordered textarea-md w-full max-w-xs" name="description" value={game?.description} onChange={adjustTextareaHeight} ref={textareaRef}></textarea>
                     </div>
                     <div className="modal-action">
-                        <button className="btn btn-outline" onClick={() => window.edit_game_modal.close()}>
+                        <button className="btn btn-outline" onClick={() => (window as Window & typeof globalThis & { add_game_modal: HTMLDialogElement; }).edit_game_modal.close()}>
                             Close
                         </button>
                         <button
