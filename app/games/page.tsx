@@ -1,13 +1,17 @@
-'use client'
-
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import "../models/window";
 import { Game } from "../models/game";
 
-export default function Games() {
-    const [games, setGames] = useState([]);
-    const [formData, setFormData] = useState({
+interface FormData {
+    image: string;
+    title: string;
+    description: string;
+}
+
+export default function Games(): JSX.Element {
+    const [games, setGames] = useState<Game[]>([]);
+    const [formData, setFormData] = useState<FormData>({
         image: "",
         title: "",
         description: "",
@@ -24,7 +28,7 @@ export default function Games() {
             });
     }, []);
 
-    const addGame = async () => {
+    const addGame = async (): Promise<void> => {
         try {
             const response = await fetch("/api/games", {
                 method: "POST",
@@ -35,19 +39,19 @@ export default function Games() {
             });
 
             if (response.ok) {
-                window.add_game_modal.close();
+                (window as Window & typeof globalThis & { add_game_modal: HTMLDialogElement; }).add_game_modal.close();
                 console.log("Game created successfully!");
             } else {
                 console.error("Failed to create a game");
             }
-        } catch (error) {
+        } catch (error: unknown) {
             console.error("Error creating a game:", error);
         } finally {
             console.log('finally');
         }
     };
 
-    const handleInputChange = (e) => {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
@@ -60,7 +64,7 @@ export default function Games() {
             <div className="flex flex-row justify-between">
                 <h1>Games:</h1>
                 <div className="flex justify-end">
-                    <button className="btn btn-accent" onClick={() => document.getElementById('add_game_modal').showModal()}>Add game</button>
+                    <button className="btn btn-accent" onClick={() => (document.getElementById('add_game_modal') as HTMLDialogElement).showModal()}>Add game</button>
                 </div>
             </div>
             <div>
@@ -105,10 +109,10 @@ export default function Games() {
                         <label className="label">
                             <span className="label-text">Description</span>
                         </label>
-                        <textarea className="textarea textarea-bordered textarea-md w-full max-w-xs" name="description"></textarea>
+                        <textarea className="textarea textarea-bordered textarea-md w-full max-w-xs" name="description" onChange={handleInputChange} value={formData.description}></textarea>
                     </div>
                     <div className="modal-action">
-                        <button className="btn btn-outline" onClick={() => window.add_game_modal.close()}>
+                        <button className="btn btn-outline" onClick={() => (window as Window & typeof globalThis & { add_game_modal: HTMLDialogElement; }).add_game_modal.close()}>
                             Close
                         </button>
                         <button
