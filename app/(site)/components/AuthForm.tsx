@@ -1,17 +1,16 @@
 'use client';
 
-import { signIn, useSession } from 'next-auth/react';
+import { SignInResponse, signIn, useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { BsGithub } from 'react-icons/bs';
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from "next/navigation";
 
 import AuthSocialButton from './AuthSocialButton';
 
-const AuthForm = () => {
+const AuthForm: React.FC = () => {
     const session = useSession();
     const router = useRouter();
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     useEffect(() => {
         if (session?.status === 'authenticated') {
@@ -19,11 +18,12 @@ const AuthForm = () => {
         }
     }, [session?.status, router]);
 
+
     const socialAction = (action: string) => {
         setIsLoading(true);
 
         signIn(action, { redirect: false })
-            .then((callback) => {
+            .then((callback: SignInResponse | undefined) => {
                 if (callback?.error) {
                     console.error('Invalid credentials!');
                 }
