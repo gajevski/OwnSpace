@@ -6,6 +6,10 @@ import SideNav from './(site)/components/SideNav'
 
 const inter = Inter({ subsets: ['latin'] })
 
+type RootLayoutProps = {
+  children: React.ReactNode
+}
+
 export const metadata: Metadata = {
   title: 'OwnSpace',
   description: 'My safe OwnSpace',
@@ -13,9 +17,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode
-}) {
+}: RootLayoutProps) {
   return (
     <html lang="en">
       <body>
