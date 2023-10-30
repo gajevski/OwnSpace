@@ -1,7 +1,18 @@
 import prisma from "@/app/libs/prismadb";
 import getCurrentUser from "./getCurrentUser"
 
-const getCurrentUserWithGames = async () => {
+interface UserWithGames {
+  id: number;
+  games: Game[];
+}
+
+interface Game {
+  id: number;
+  name: string;
+  description: string;
+}
+
+const getCurrentUserWithGames = async (): Promise<UserWithGames | string | null> => {
   try {
     const currentUser = await getCurrentUser();
 
